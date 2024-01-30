@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.khob.domain.dto.AuthenticationRequest;
 import com.project.khob.domain.dto.AuthenticationResponse;
 import com.project.khob.domain.dto.RegisterRequest;
+import com.project.khob.domain.dto.UserDoesNotExistException;
 import com.project.khob.domain.entities.Token;
 import com.project.khob.domain.entities.TokenType;
 import com.project.khob.domain.entities.User;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,13 +47,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 password
         );
 
-        // Compares generated token with the token for the user (throws Authentication exception)
+        // Checks if the token is valid (throws Authentication exception)
         authenticationManager.authenticate(authToken);
 
-        // If there is a math, get the User from the database
-        var user = userRepository.findByEmail(request.getUsername()).orElseThrow(()->new RuntimeException("User doesn't exist"));
+        // If there is a match, get the User from the database
+        var user = userRepository.findByEmail(username).orElseThrow(UserDoesNotExistException::new);
 
-            //generate token using this user
+        // generate token using this user
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
