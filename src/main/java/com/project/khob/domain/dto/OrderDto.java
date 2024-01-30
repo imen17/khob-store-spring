@@ -1,5 +1,6 @@
 package com.project.khob.domain.dto;
 
+import com.project.khob.domain.entities.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,9 @@ import java.util.Date;
 public class OrderDto {
         private Long number;
         private Date dateCreated;
-        private Float total;
+        private Date dateCompleted;
+        private Date dateCancelled;
+        private OrderStatus orderStatus;
         private CartDto cart;
 
 }

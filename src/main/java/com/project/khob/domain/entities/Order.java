@@ -20,7 +20,13 @@ public class Order {
     @GeneratedValue
     private Long orderNumber;
     private Date dateCreated;
-    private Float total;
+    private Date dateCompleted;
+    private Date dateCancelled;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cartId", referencedColumnName = "cartId")
