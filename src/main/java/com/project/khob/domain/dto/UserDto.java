@@ -19,8 +19,9 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
-    private String address;
     private Long phone;
     private UserRole role;
     private List<CartDto> carts;
+    private List<TokenDto> tokens;
+    private List<AddressDto> addresses;
 }

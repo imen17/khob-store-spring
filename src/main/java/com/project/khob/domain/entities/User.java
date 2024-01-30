@@ -32,7 +32,6 @@ public class User implements UserDetails {
 
     @NonNull
     private String password;
-    private String address;
     private Long phone;
 
     @Enumerated(EnumType.STRING)
@@ -44,9 +43,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
+    @OneToMany(mappedBy = "user")
+    private List<Address> Addresses;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.getAuthorities();
+        return null;
     }
 
     @Override
