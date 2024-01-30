@@ -1,6 +1,5 @@
 package com.project.khob.domain.dto;
 
-import com.project.khob.domain.entities.Cart;
 import com.project.khob.domain.entities.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
