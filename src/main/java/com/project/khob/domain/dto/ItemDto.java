@@ -22,7 +22,7 @@ public class ItemDto {
     private Date dateAdded;
     private Date dateRemoved;
 
-    private ProductDto product;
+    private ProductVariantDto productVariant;
 
     private CartDto cart;
 }

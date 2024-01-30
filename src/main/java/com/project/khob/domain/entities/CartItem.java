@@ -24,9 +24,9 @@ public class CartItem {
     private Date dateRemoved;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @MapsId("productId")
-    @JoinColumn(name = "productId", referencedColumnName = "productId")
-    private Product product;
+    @MapsId("productVariantId")
+    @JoinColumn(name = "productVariantId", referencedColumnName = "productVariantId")
+    private ProductVariant productVariant;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("cartId")
