@@ -24,5 +24,5 @@ public class Address {
     @OneToOne (cascade = CascadeType.ALL)
     @MapsId ("userId")
     @JoinColumn(name = "userId",referencedColumnName = "userId")
-    private String User;
+    private User User;
 }

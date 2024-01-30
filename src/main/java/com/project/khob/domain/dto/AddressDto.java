@@ -15,5 +15,5 @@ public class AddressDto {
     private String addressLine;
     private String city;
     private String governorate;
-    private String User;
+    private UserDto user;
 }
