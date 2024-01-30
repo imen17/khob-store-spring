@@ -1,0 +1,86 @@
+Auth space
+
+    AuthController
+        /auth/login
+        /auth/register
+
+User space (behind jwt token)
+
+    CartItemController
+        /user/cart/add_to_cart [POST: product_varinant_id, user_id] {
+
+            creates cart if it doesn't exist (bound to user)
+            creates a new cart item (bound to cart) -> 201
+
+        }
+
+        /user/cart/remove_from_cart [PATCH: cart_item_id] {
+
+            check if item belongs to user using jwt token -> 403 Unauthorised
+            update date_removed -> 204 No content
+
+
+        }
+
+        FavouritesController
+        /user/favourites/add_to_favourites [POST: product_id, user_id] {
+
+            creates a new favourite item (bound to user) -> 201
+
+        }
+
+        /user/favourites/add_from_favourites [DELETE: product_id, user_id] {
+
+            remove from table favourite -> 204 No content
+
+
+        }
+
+
+        CartController
+
+        /user/carts/clear_latest [PATCH: user_id] {
+            get latest active cart and set the date_closed (or whatever)
+
+        }
+
+
+        OrderController
+        #CREATE
+        /user/orders/ [POST: cart_id] {
+
+            retrieves the cart of the user and checks if it's active
+            if not active throw error
+            if active create new order (bound to cart)
+
+        }
+
+        #CANCEL / Can also be done by admin ... to be added later
+        /user/orders/{order_id} [PATCH: order_id] {
+            check if order is not already cancelled
+            if cancelled return already cancelled
+            else set date_cancelled to date
+        }
+
+        #SET CONFIRMED
+        /user/orders/{order_id}/confirm [PATCH: order_id, status = PROCESSHING SHIPPED] {
+            check if order is not canclled
+            if cancelled refuse
+            else update date_confirmed
+        }
+
+
+
+Admin space
+
+        #UPDATE_STATUS
+        /user/orders/{order_id}/update_status [PATCH: order_id, status = PROCESSHING SHIPPED] {
+            check if order is not canclled
+            if cancelled refuse
+            else update status
+        }
+
+}
+
+
+Product space
