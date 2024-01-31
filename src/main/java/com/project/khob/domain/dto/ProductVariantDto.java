@@ -1,6 +1,6 @@
 package com.project.khob.domain.dto;
 
-import com.project.khob.domain.entities.Item;
+import com.project.khob.domain.entities.CartItem;
 import com.project.khob.domain.entities.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +16,7 @@ public class ProductVariantDto {
     private String Size;
     private String color;
     private Integer stock;
-    private Item item;
+    private CartItem item;
     private Product product;
-
 
 }

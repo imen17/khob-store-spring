@@ -1,10 +1,9 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
@@ -17,10 +16,15 @@ import java.util.Date;
 @Table(name = "Item")
 public class CartItem {
 
-    @EmbeddedId
-    private CartItemKey itemId;
+    @Id
+    @GeneratedValue
+    private Long cartItemId;
+
+    @PositiveOrZero
     private Integer quantity;
-    private Date dateAdded;
+
+    @NonNull
+    private Date dateAdded = new Date();
     private Date dateRemoved;
 
     @OneToOne(cascade = CascadeType.ALL)

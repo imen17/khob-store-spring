@@ -21,6 +21,7 @@ public class Cart {
     @GeneratedValue
     private Long cartId;
     private Date dateCreated;
+    private Date dateClosed;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
