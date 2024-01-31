@@ -131,14 +131,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         revokeAllUserTokens(user);
         saveUserToken(user, accessToken);
 
-
+        // Create an Authentication response with both tokens
         var authResponse = AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+        // Write the response to the HttpServletResponse, essentially returning both tokens.
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-
-
     }
 
     @Override
@@ -152,8 +151,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         tokenRepository.save(token);
     }
-
-
 
     @Override
     public void revokeAllUserTokens(User user) {

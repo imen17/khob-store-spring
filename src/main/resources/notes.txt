@@ -3,6 +3,8 @@ Auth space
     AuthController
         /auth/login
         /auth/register
+        /auth/refresh-token
+        /auth/logout
 
 User space (behind jwt token)
 

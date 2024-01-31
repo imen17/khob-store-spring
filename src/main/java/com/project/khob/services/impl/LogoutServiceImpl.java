@@ -21,19 +21,30 @@ public class LogoutServiceImpl implements LogoutHandler {
             HttpServletResponse response,
             Authentication authentication
     ) {
+        // Check if request contains auth header
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             return;
         }
-        jwt = authHeader.substring(7);
+
+        final String jwt = authHeader.substring(7);
+
+        // Retrieve the token from the database
         var storedToken = tokenRepository.findByToken(jwt)
                 .orElse(null);
-        if (storedToken != null) {
-            storedToken.setExpired(true);
-            storedToken.setRevoked(true);
-            tokenRepository.save(storedToken);
-            SecurityContextHolder.clearContext();
+
+        if (storedToken == null) {
+            return;
         }
+
+        // Set the token as expired
+        storedToken.setExpired(true);
+        storedToken.setRevoked(true);
+
+        // Persist it to the database;
+        tokenRepository.save(storedToken);
+
+        // Clear security context to enforce the logout;
+        SecurityContextHolder.clearContext();
     }
 }

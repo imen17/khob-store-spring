@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OrderController {
-    private OrderService orderService;
+    private final OrderService orderService;
 
     private Mapper<Order, OrderDto> orderMapper;
 
