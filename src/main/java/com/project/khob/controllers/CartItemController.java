@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class CartItemController {
     private final CartItemService cartItemService;
@@ -24,8 +24,8 @@ public class CartItemController {
     private final JwtService jwtService;
     private final Mapper<CartItem, CartItemDto> itemMapper;
 
-    @PostMapping(path = "/add_to_cart/{product_variant_id}")
-    public ResponseEntity<Object> addToCart(@RequestHeader("Authorization") String authHeader, @PathVariable("item_id") Long product_variant_id){
+    @PostMapping(path = "/cart/add/{product_variant_id}")
+    public ResponseEntity<Object> addToCart(@RequestHeader("Authorization") String authHeader, @PathVariable("product_variant_id") Long product_variant_id){
         final String refreshToken = authHeader.substring(7);
         final String username = jwtService.extractUsername(refreshToken);
         if (username == null) {

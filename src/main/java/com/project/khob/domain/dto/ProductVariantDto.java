@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ProductVariantDto {
-    private Long id;
-    private String Size;
+    private Long productVariantId;
+    private String size;
     private String color;
     private Integer stock;
-    private CartItem item;
-    private Product product;
-
 }

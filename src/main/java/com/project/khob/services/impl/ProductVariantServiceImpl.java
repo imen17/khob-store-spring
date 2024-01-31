@@ -15,7 +15,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     private final ProductVariantRepository productVariantRepository;
     @Override
     public ProductVariant create(ProductVariant productVariant) {
-        return null;
+        return productVariantRepository.save(productVariant);
     }
 
     @Override
