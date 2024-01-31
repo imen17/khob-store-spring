@@ -1,10 +1,9 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -17,9 +16,9 @@ public class Category {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer categoryId;
+    @NonNull
     private String category;
-
     @OneToMany(mappedBy = "subCategory")
-    private SubCategory subCategory;
+    private Collection<SubCategory> subCategory;
 }

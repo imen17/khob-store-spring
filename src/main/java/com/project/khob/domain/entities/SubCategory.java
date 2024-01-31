@@ -1,10 +1,13 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -17,14 +20,15 @@ public class SubCategory {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer subCategoryId;
+
+    @NotBlank
     private String subCategory;
 
-    @OneToMany(mappedBy = "product")
-    private Product product;
+    @OneToMany(mappedBy = "subCategory")
+    private Collection<Product> products;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("CategoryId")
-    @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId")
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
     private Category category;
 }

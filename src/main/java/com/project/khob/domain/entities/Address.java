@@ -1,6 +1,7 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,13 +17,19 @@ import lombok.NoArgsConstructor;
 public class Address {
 
     @Id
-    private Long Id;
+    @GeneratedValue
+    private Long addressId;
+
+    @NotBlank
     private String addressLine;
+
+    @NotBlank
     private String city;
+
+    @NotBlank
     private String governorate;
 
-    @OneToOne (cascade = CascadeType.ALL)
-    @MapsId ("userId")
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId",referencedColumnName = "userId")
-    private User User;
+    private User user;
 }

@@ -24,7 +24,7 @@ public class CartItemController {
     private final JwtService jwtService;
     private final Mapper<CartItem, CartItemDto> itemMapper;
 
-    @PostMapping(path = "/add_to_cart/${product_variant_id}")
+    @PostMapping(path = "/add_to_cart/{product_variant_id}")
     public ResponseEntity<Object> addToCart(@RequestHeader("Authorization") String authHeader, @PathVariable("item_id") Long product_variant_id){
         final String refreshToken = authHeader.substring(7);
         final String username = jwtService.extractUsername(refreshToken);

@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SubCategoryDto {
-
-    private Integer id;
+    private Integer subCategoryId;
     private String subCategory;
-    private Product product;
-    private Category category;
+
 }

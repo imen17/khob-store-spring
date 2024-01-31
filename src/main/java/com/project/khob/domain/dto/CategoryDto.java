@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CategoryDto {
-    private Integer id;
+    private Integer categoryId;
     private String category;
-
-    private SubCategory subCategory;
 }

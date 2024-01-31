@@ -4,6 +4,8 @@ import com.project.khob.domain.dto.ProductDto;
 import com.project.khob.domain.entities.Product;
 import com.project.khob.mappers.Mapper;
 import com.project.khob.services.ProductService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,29 +15,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequiredArgsConstructor
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
+    private final Mapper<Product,ProductDto> productMapper;
 
-    private Mapper<Product,ProductDto> productMapper;
-
-    public ProductController(ProductService productService, Mapper<Product,ProductDto> productMapper){
-        this.productService=productService;
-        this.productMapper=productMapper;
-    }
-
-    //Create
-    @PostMapping("/admin/products/new")
+    @PostMapping("/admin/products")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto){
-        Product product=productMapper.mapFrom(productDto);
-        Product savedProduct=productService.save(product);
+        var product = productMapper.mapFrom(productDto);
+        var savedProduct = productService.save(product);
         return new ResponseEntity<>(productMapper.mapTo(savedProduct), HttpStatus.CREATED);
     }
 
-
     //listAll
-    @GetMapping(path = "/products")
+    @GetMapping("/products")
     public Page<ProductDto> listProducts(Pageable pageable){
         Page<Product> products=productService.findAll(pageable);
         return products.map(productMapper::mapTo);
@@ -56,7 +50,7 @@ public class ProductController {
         if (!productService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        productDto.setId(id);
+        productDto.setProductId(id);
         Product product=productMapper.mapFrom(productDto);
         Product savedProduct=productService.save(product);
         return new ResponseEntity<>(productMapper.mapTo(savedProduct),HttpStatus.OK);

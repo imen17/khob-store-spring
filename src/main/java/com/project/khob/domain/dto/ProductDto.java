@@ -13,12 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ProductDto {
-    private Long id;
+    private Long productId;
     private String name;
     private String description;
     private Float price;
-    private CartItemDto cartItem;
-    private ProductVariantDto productVariantDto;
-    private SubCategoryDto subCategoryDto;
-
 }

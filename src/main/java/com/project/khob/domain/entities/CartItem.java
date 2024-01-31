@@ -3,7 +3,6 @@ package com.project.khob.domain.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
@@ -33,7 +32,6 @@ public class CartItem {
     private ProductVariant productVariant;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("cartId")
     @JoinColumn(name = "cartId", referencedColumnName = "cartId")
     private Cart cart;
 }

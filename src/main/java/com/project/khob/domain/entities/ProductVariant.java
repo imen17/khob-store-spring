@@ -1,10 +1,8 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -15,16 +13,24 @@ import lombok.NoArgsConstructor;
 @Table(name = "ProductVariant")
 public class ProductVariant {
 
-    private Long id;
-    private String Size;
+    @Id
+    @GeneratedValue
+    private Long productVariantId;
+
+    @NonNull
+    private String size;
+
+    @NonNull
     private String color;
-    private Integer stock;
+
+    @PositiveOrZero
+    private Integer stock = 0;
 
     @OneToOne(mappedBy = "productVariant")
     private CartItem cartItem;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @MapsId("productId")
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
     private Product product;
+
 }

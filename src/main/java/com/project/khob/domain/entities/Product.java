@@ -1,10 +1,9 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 
 import java.util.List;
 
@@ -19,14 +18,17 @@ public class Product {
     @Id
     @GeneratedValue
     private Long productId;
+
+    @NotBlank
     private String name;
+
     private String description;
-    private Float price;
+
+    @PositiveOrZero
+    private Integer price = 0;
+
     @Enumerated
     private ProductStatus status;
-
-    @OneToOne(mappedBy = "product")
-    private CartItem cartItem;
 
     @OneToMany(mappedBy = "product")
     private List<Photo> photos;
@@ -35,7 +37,6 @@ public class Product {
     private List<ProductVariant> productVariants;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("subCategoryId")
     @JoinColumn(name = "subCategoryId", referencedColumnName = "subCategoryId")
     private SubCategory subCategory;
 }
