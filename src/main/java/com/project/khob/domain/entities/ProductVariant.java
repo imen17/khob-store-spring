@@ -21,7 +21,7 @@ public class ProductVariant {
     private Integer stock;
 
     @OneToOne(mappedBy = "productVariant")
-    private Item item;
+    private CartItem cartItemitem;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId("productId")
