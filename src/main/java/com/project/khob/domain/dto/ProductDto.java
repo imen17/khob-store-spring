@@ -17,8 +17,7 @@ public class ProductDto {
     private String name;
     private String description;
     private Float price;
-    private List<String> tags;
-    private ItemDto item;
+    private CartItemDto cartItem;
     private ProductVariantDto productVariantDto;
     private SubCategoryDto subCategoryDto;
 

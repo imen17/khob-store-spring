@@ -18,6 +18,6 @@ public class CartDto {
     private Long id;
     private Date dateCreated;
     private User user;
-    private List<ItemDto> items;
+    private List<CartItemDto> items;
     private OrderDto order;
 }

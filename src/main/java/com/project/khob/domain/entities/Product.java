@@ -22,7 +22,8 @@ public class Product {
     private String name;
     private String description;
     private Float price;
-    private List<String> tags;
+    @Enumerated
+    private ProductStatus status;
 
     @OneToOne(mappedBy = "product")
     private CartItem cartItem;

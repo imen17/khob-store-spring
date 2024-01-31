@@ -1,17 +1,13 @@
 package com.project.khob.controllers;
 
-import com.project.khob.domain.dto.ApiErrorResponse;
-import com.project.khob.domain.dto.ItemDto;
+import com.project.khob.domain.dto.CartItemDto;
 import com.project.khob.domain.entities.CartItem;
-import com.project.khob.domain.entities.CartItemKey;
 import com.project.khob.mappers.Mapper;
 import com.project.khob.services.CartItemService;
 import com.project.khob.services.ProductService;
 import com.project.khob.services.UserService;
 import com.project.khob.services.impl.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +18,7 @@ public class CartItemController {
     private final UserService userService;
     private final JwtService jwtService;
     private final CartItemService cartItemService;
-    private final Mapper<CartItem, ItemDto> itemMapper;
+    private final Mapper<CartItem, CartItemDto> itemMapper;
 
 //    @PostMapping(path = "/add_to_cart/${product_id}")
 //    public ResponseEntity<Object> addToCart(@RequestHeader("Authorization") String authHeader, @PathVariable("item_id") Long product_id){
