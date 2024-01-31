@@ -12,8 +12,6 @@ public interface ProductService {
 
     Product save(Product product);
 
-    //List<Product> findAll();
-
     Page<Product> findAll(Pageable pageable);
 
     Optional<Product> findOne(Long id);
@@ -23,4 +21,6 @@ public interface ProductService {
     Product partialUpdate(Long id, Product product);
 
     void delete(Long id);
+
+    Long getStock(Product product);
 }

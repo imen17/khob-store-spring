@@ -12,13 +12,13 @@ User space (behind jwt token)
         /user/cart/add_to_cart [POST: product_varinant_id, user_id] {
 
             creates cart if it doesn't exist (bound to user)
-            creates a new cart item (bound to cart) -> 201
+            creates a new cart cartItem (bound to cart) -> 201
 
         }
 
         /user/cart/remove_from_cart [PATCH: cart_item_id] {
 
-            check if item belongs to user using jwt token -> 403 Unauthorised
+            check if cartItem belongs to user using jwt token -> 403 Unauthorised
             update date_removed -> 204 No content
 
 
@@ -27,7 +27,7 @@ User space (behind jwt token)
         FavouritesController
         /user/favourites/add_to_favourites [POST: product_id, user_id] {
 
-            creates a new favourite item (bound to user) -> 201
+            creates a new favourite cartItem (bound to user) -> 201
 
         }
 

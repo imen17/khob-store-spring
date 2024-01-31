@@ -1,10 +1,6 @@
 package com.project.khob.domain.dto;
 
-import com.project.khob.domain.entities.Item;
-import com.project.khob.domain.entities.Order;
 import com.project.khob.domain.entities.User;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

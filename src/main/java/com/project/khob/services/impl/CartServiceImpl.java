@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
     public CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
          cart.setCartId(id);
 
         return cartRepository.findById(id).map(existingCart -> {
-            Optional.ofNullable(cart.getItems()).ifPresent(existingCart::setItems);
+            Optional.ofNullable(cart.getCartItems()).ifPresent(existingCart::setCartItems);
             return cartRepository.save(existingCart);
         }).orElseThrow(()->new RuntimeException("Cart doesn't exist"));    }
 

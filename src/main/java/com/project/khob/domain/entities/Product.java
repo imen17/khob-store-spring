@@ -25,7 +25,7 @@ public class Product {
     private List<String> tags;
 
     @OneToOne(mappedBy = "product")
-    private Item item;
+    private CartItem cartItem;
 
     @OneToMany(mappedBy = "product")
     private List<Photo> photos;

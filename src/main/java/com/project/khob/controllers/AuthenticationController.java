@@ -1,7 +1,7 @@
 package com.project.khob.controllers;
 
 
-import com.project.khob.domain.dto.AuthenticationErrorResponse;
+import com.project.khob.domain.dto.ApiErrorResponse;
 import com.project.khob.domain.dto.AuthenticationRequest;
 import com.project.khob.domain.entities.User;
 import com.project.khob.services.impl.AuthenticationServiceImpl;
@@ -46,12 +46,12 @@ public class AuthenticationController {
             @RequestBody @Valid User user, BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(AuthenticationErrorResponse.builder().message(bindingResult.getFieldError().toString()).build());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiErrorResponse.builder().message(bindingResult.getFieldError().toString()).build());
         }
         try {
             return ResponseEntity.ok(authenticationService.register(user));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(AuthenticationErrorResponse.builder().message(e.getMessage()).build());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiErrorResponse.builder().message(e.getMessage()).build());
         }
 
     }

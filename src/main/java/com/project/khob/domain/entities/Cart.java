@@ -27,7 +27,7 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart")
-    private List<Item> items;
+    private List<CartItem> cartItems;
 
     @OneToOne(mappedBy = "cart")
     private Order order;

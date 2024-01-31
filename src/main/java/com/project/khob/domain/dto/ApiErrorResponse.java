@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthenticationErrorResponse {
+public class ApiErrorResponse {
     @JsonProperty("message")
     private String message;
 

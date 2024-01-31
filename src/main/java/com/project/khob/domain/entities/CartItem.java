@@ -15,10 +15,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Item")
-public class Item {
+public class CartItem {
 
     @EmbeddedId
-    private ItemKey itemId;
+    private CartItemKey itemId;
     private Integer quantity;
     private Date dateAdded;
     private Date dateRemoved;

@@ -3,26 +3,21 @@ package com.project.khob.services.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.khob.domain.dto.AuthenticationRequest;
 import com.project.khob.domain.dto.AuthenticationResponse;
-import com.project.khob.domain.dto.RegisterRequestDto;
 import com.project.khob.domain.dto.UsernameAlreadyExistsException;
 import com.project.khob.domain.entities.Token;
 import com.project.khob.domain.entities.TokenType;
 import com.project.khob.domain.entities.User;
-import com.project.khob.domain.entities.UserRole;
 import com.project.khob.repositories.TokenRepository;
 import com.project.khob.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 
@@ -33,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserServiceImpl userService;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtServiceImpl jwtService;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @Override
