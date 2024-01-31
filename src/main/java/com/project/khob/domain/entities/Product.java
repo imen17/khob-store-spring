@@ -29,4 +29,12 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Photo> photos;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductVariant> productVariants;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("subCategoryId")
+    @JoinColumn(name = "subCategoryId", referencedColumnName = "subCategoryId")
+    private SubCategory subCategory;
 }

@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class CartItemKey implements Serializable {
-    @Column(name = "productId")
-    private Long productId;
+public class CartItemKey implements Serializable{
+    @Column(name = "productVariantId")
+    private Long productVariantId;
 
     @Column(name = "cartId")
     private Long cartId;
