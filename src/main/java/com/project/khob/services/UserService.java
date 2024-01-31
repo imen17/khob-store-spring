@@ -11,6 +11,8 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
+
+    Optional<User> findByEmail(String email);
     User createUser(User user);
     void changePassword(ChangePasswordRequest request, Principal connectedUser);
 

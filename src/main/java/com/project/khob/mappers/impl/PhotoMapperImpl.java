@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 public class PhotoMapperImpl implements Mapper<Photo, PhotoDto> {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public PhotoMapperImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;

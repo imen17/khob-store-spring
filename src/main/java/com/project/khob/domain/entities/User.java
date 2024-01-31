@@ -1,10 +1,8 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,15 +20,23 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long userId;
+
+    @NonNull
     private String firstName;
+
+    @NonNull
     private String lastName;
+
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Malformed email address")
     private String email;
 
+    @NonNull
     private String password;
     private String address;
     private Long phone;
+
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role = UserRole.USER; // Guarantee that any created user has at least role USER
 
     @OneToMany(mappedBy = "user")
     private List<Cart> carts;

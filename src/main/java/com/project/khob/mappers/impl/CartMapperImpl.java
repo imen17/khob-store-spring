@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CartMapperImpl implements Mapper<Cart, CartDto> {
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public CartMapperImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
