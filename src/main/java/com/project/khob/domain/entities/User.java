@@ -1,54 +1,46 @@
 package com.project.khob.domain.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+import java.util.*;
 
 @Entity
-@Table(name = "AppUser")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+@Builder
+@Table(name = "app_user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Long userId;
+    private Long id;
 
-    @NonNull
-    private String firstName;
-
-    @NonNull
-    private String lastName;
-
-    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Malformed email address")
     private String email;
 
-    @NonNull
+    private String firstName;
+
+    private String lastName;
+
     private String password;
+
     private Long phone;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.USER; // Guarantee that any created user has at least role USER
-
-    @OneToMany(mappedBy = "user")
-    private List<Cart> carts;
-
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
-
-    @OneToMany(mappedBy = "user")
-    private List<Address> Addresses;
+    @Builder.Default
+    private Set<UserRole> roles = new HashSet<>(List.of(UserRole.USER)); // Guarantee that any created user has at least role USER
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> auths = new ArrayList<>();
+        for (UserRole role : this.getRoles()){
+            auths.add(new SimpleGrantedAuthority(role.name().toUpperCase()));
+        }
+        return auths;
     }
 
     @Override
@@ -80,4 +72,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -1,67 +1,80 @@
 package com.project.khob.controllers;
 
 
-import com.project.khob.domain.dto.ApiErrorResponse;
-import com.project.khob.domain.dto.AuthenticationRequest;
-import com.project.khob.domain.entities.User;
-import com.project.khob.services.impl.AuthenticationServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
+import com.project.khob.domain.dto.UserDTO;
+import com.project.khob.helpers.ValidationErrorResponse;
+import com.project.khob.services.AuthenticationService;
+import com.project.khob.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
+import com.project.khob.domain.dto.AuthRequestDTO;
 
-import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://127.0.0.1:5173", "http://192.168.1.100:5173"}, maxAge = 3600, allowCredentials = "true")
 public class AuthenticationController {
 
-    private final AuthenticationServiceImpl authenticationService;
+    private final AuthenticationService authService;
+    private final UserService userService;
 
+
+    @Operation(summary = "Login to the system using username and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Logged in successfully.")
+    })
     @PostMapping("/login")
-    public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request, BindingResult bindingResult)
-    {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(bindingResult.getAllErrors());
-        }
-        try {
-            return ResponseEntity.ok(authenticationService.authenticate(request));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e);
-        }
-
+    public void AuthenticateAndGetCookie(@Valid @RequestBody AuthRequestDTO authRequestDTO, HttpServletResponse response) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                authRequestDTO.getUsername(),
+                authRequestDTO.getPassword()
+        );
+        authService.login(token, response);
     }
 
-
+    @Operation(summary = "Create an account in the system using username and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Account created successfully"),
+            @ApiResponse(responseCode = "400",  content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+    })
     @PostMapping("/register")
-    public ResponseEntity<Object> register(
-            @RequestBody @Valid User user, BindingResult bindingResult
-    ) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiErrorResponse.builder().message(bindingResult.getFieldError().toString()).build());
-        }
-        try {
-            return ResponseEntity.ok(authenticationService.register(user));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiErrorResponse.builder().message(e.getMessage()).build());
-        }
-
+    public ResponseEntity<String> registerNewUserAccount(@Valid @RequestBody UserDTO userDTO) throws Exception {
+        userService.create(userDTO);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Account created successfully");
     }
 
-    @PostMapping("/refresh-token")
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        authenticationService.refreshToken(request, response);
+    @GetMapping("/refreshToken")
+    public void refreshToken(@CookieValue("refreshToken") String refreshToken, HttpServletResponse response) throws Exception{
+        authService.refreshToken(refreshToken, response);
     }
+
+//    refreshTokenService.findByToken(refreshTokenRequestDTO.getRefreshToken())
+//            .map(refreshTokenService::verifyExpiration)
+//                .map(RefreshToken::getUser)
+//                .map(user -> {
+//        String accessToken = jwtService.generateToken(user.getUsername());
+//        ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+//                .httpOnly(true)
+//                .secure(false)
+//                .path("/")
+//                .maxAge(cookieExpiry)
+//                .build();
+//        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+//        return JwtResponseDTO.builder()
+//                .refreshToken(refreshTokenRequestDTO.getRefreshToken())
+//                .build();
+//    }).orElseThrow(() ->new RuntimeException("Invalid refresh token."));
 
 }
