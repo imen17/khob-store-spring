@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import static com.project.khob.domain.entities.UserRole.ADMIN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -30,6 +29,7 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/error/**",
             "/auth/**",
+            "/products/**"
     };
 
      private final JwtAuthenticationFilter jwtAuthenticationFilter;

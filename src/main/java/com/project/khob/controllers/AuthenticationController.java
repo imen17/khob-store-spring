@@ -1,6 +1,5 @@
 package com.project.khob.controllers;
 
-
 import com.project.khob.domain.dto.UserDTO;
 import com.project.khob.helpers.ValidationErrorResponse;
 import com.project.khob.services.AuthenticationService;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import com.project.khob.domain.dto.AuthRequestDTO;
 
 import lombok.RequiredArgsConstructor;
-
 
 @RestController
 @RequestMapping("/auth")
@@ -59,22 +57,5 @@ public class AuthenticationController {
     public void refreshToken(@CookieValue("refreshToken") String refreshToken, HttpServletResponse response) throws Exception{
         authService.refreshToken(refreshToken, response);
     }
-
-//    refreshTokenService.findByToken(refreshTokenRequestDTO.getRefreshToken())
-//            .map(refreshTokenService::verifyExpiration)
-//                .map(RefreshToken::getUser)
-//                .map(user -> {
-//        String accessToken = jwtService.generateToken(user.getUsername());
-//        ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
-//                .httpOnly(true)
-//                .secure(false)
-//                .path("/")
-//                .maxAge(cookieExpiry)
-//                .build();
-//        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-//        return JwtResponseDTO.builder()
-//                .refreshToken(refreshTokenRequestDTO.getRefreshToken())
-//                .build();
-//    }).orElseThrow(() ->new RuntimeException("Invalid refresh token."));
 
 }

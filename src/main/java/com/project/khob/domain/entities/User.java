@@ -28,7 +28,8 @@ public class User implements UserDetails {
 
     private String password;
 
-    private Long phone;
+    @OneToOne
+    private Photo photo;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
