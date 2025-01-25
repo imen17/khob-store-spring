@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@Builder
 public class UserDTO {
 
     @Email
@@ -27,6 +27,5 @@ public class UserDTO {
     @NotBlank
     private String lastName;
     private String photoUrl;
-    private Long phone;
     private Set<UserRole> roles;
 }

@@ -23,8 +23,6 @@ public class Variant {
 
     private String color;
 
-    private Integer stock;
-
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;

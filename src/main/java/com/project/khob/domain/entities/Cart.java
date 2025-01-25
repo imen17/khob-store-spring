@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Cart {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany
-    private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "cart")
+    @Builder.Default
+    private List<CartItem> cartItems = Collections.emptyList();
 }

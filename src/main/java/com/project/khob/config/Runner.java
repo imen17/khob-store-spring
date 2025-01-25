@@ -15,11 +15,14 @@ import java.util.List;
 @Component
 public class Runner  implements ApplicationRunner {
 
+    // This class runs at the startup of the application in order to populate the database with starting data
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final ProductRepository productRepository;
+    private  final VariantRepository variantRepository;
     @Override
     public void run(ApplicationArguments args) {
         User adminUser = User.builder()
@@ -27,7 +30,7 @@ public class Runner  implements ApplicationRunner {
                 .firstName("Imen")
                 .lastName("Naija")
                 .password(passwordEncoder.encode("a"))
-                .roles(new HashSet<>(List.of(UserRole.ADMIN)))
+                .roles(new HashSet<>(List.of(UserRole.ADMIN, UserRole.USER)))
                 .build();
         User regularUser = User.builder()
                 .email("amaninaija@gmail.com")
@@ -62,5 +65,9 @@ public class Runner  implements ApplicationRunner {
         Product productE = Product.builder().name("Bra B").price(100).photos(List.of(photoE)).subCategory(subCategoryB).build();
         productRepository.saveAll(List.of(productA,productB,productC,productD,productE));
 
+        Variant variantA = Variant.builder().color("Blue").size("XL").product(productC).build();
+        Variant variantB = Variant.builder().color("Red").size("L").product(productC).build();
+        variantRepository.save(variantA);
+        variantRepository.save(variantB);
     }
 }

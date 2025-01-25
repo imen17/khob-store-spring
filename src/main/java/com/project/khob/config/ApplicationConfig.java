@@ -21,18 +21,31 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+/**
+ * This class was created to:
+ * - Set the AuthenticationProvider to be of type DaoAuthenticationProvider (Which gives us access to the usernames
+ * of authenticated users)
+ * - Set the password encoder, I went with BCryptPasswordEncoder
+ * - Customize the UserDetailsService (Which retrieves the details of authenticated users from
+ * the entity that implements UserDetails, in our case it is the User class)
+ * - Set the AuthenticationManger used in the AuthenticationService class
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
+
     private final UserRepository userRepository;
 
+    // We have to configure the UserDetails service to retrieve users by their email
+    // because it is set to retrieve the "username" field by default which does not exist in our User class
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    // We customize our AuthenticationProvider with our custom UserDetailsService and our custom PasswordEncoder
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -50,19 +63,5 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedOrigins(List.of("http://127.0.0.1:5173"));
-//        corsConfiguration.setAllowedMethods(List.of("GET", "PUT", "DELETE", "PATCH", "POST", "HEAD", "OPTIONS"));
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.set
-//        // corsConfiguration.setAllowedHeaders(List.of("*"));
-//        // corsConfiguration.setMaxAge(3600L);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        return source;
-//    }
 
 }

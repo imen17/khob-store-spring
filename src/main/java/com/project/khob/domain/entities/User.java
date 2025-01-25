@@ -28,7 +28,8 @@ public class User implements UserDetails {
 
     private String password;
 
-    @OneToOne
+    // CascadeType.Persist: This automatically saves any photos when we create a user otherwise we get a "Transient" entity error
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Photo photo;
 
     @Enumerated(EnumType.STRING)
