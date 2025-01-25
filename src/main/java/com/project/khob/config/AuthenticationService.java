@@ -68,4 +68,8 @@ public class AuthenticationService {
         addCookiesToResponse(userEmail, response);
     }
 
+    public void logout(HttpServletResponse response) {
+        response.addHeader(HttpHeaders.SET_COOKIE, makeCookie("accessToken","", 1));
+        response.addHeader(HttpHeaders.SET_COOKIE, makeCookie("refreshToken", "", 1));
+    }
 }
